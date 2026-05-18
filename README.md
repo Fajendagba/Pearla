@@ -22,7 +22,7 @@ West African recipe site converted from static HTML to Next.js 15 App Router. Al
 ## Setup
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Fajendagba/Pearla
 cd "pearla - nextjs"
 npm install
 npm run dev
