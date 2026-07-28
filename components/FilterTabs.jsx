@@ -10,6 +10,7 @@ const FILTERS = [
   { key: 'snacks', label: 'Snacks' },
   { key: 'sides', label: 'Sides' },
   { key: 'swallows', label: 'Swallows' },
+  { key: 'sweets', label: 'Sweets' },
 ];
 
 export default function FilterTabs({ recipes, initialCategory, syncUrl = false }) {
