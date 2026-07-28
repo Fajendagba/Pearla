@@ -55,12 +55,13 @@ export default function FilterTabs({ recipes, initialCategory, syncUrl = false }
         </div>
       ) : (
         <div className="empty-state">
-          <p className="empty-state-title">No {activeLabel} recipes yet</p>
+          <p className="empty-state-title">Nothing here yet</p>
           <p className="empty-state-desc">
-            We are still cooking this category. Check back soon, or browse everything we have.
+            We have not added any {activeLabel} recipes so far. Come back later, or have a look
+            at everything else.
           </p>
           <button className="btn btn-outline" onClick={() => select('all')}>
-            Show all recipes
+            Show me everything
           </button>
         </div>
       )}

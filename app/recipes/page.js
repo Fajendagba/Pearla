@@ -4,7 +4,7 @@ import { recipes } from '@/data/recipes';
 export const metadata = {
   title: 'All Recipes',
   description:
-    'Browse every authentic West African recipe on Pearla — rice dishes, soups and stews, grills, snacks, sides and swallows.',
+    'Browse every West African recipe on Pearla. Rice dishes, soups and stews, grills, snacks, sides and swallows.',
 };
 
 export default async function RecipesPage({ searchParams }) {
@@ -16,8 +16,8 @@ export default async function RecipesPage({ searchParams }) {
         <div className="container">
           <h1 className="page-header-title">All Recipes</h1>
           <p className="page-header-desc">
-            Explore our collection of authentic West African dishes — filter by category and
-            find your next favourite meal.
+            Here is everything we have so far. Pick a category below to narrow it down and find
+            your next meal.
           </p>
         </div>
       </header>

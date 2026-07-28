@@ -20,17 +20,17 @@ const lato = Lato({
 
 export const metadata = {
   title: {
-    template: '%s — Pearla',
-    default: 'Pearla — Authentic African Recipes',
+    template: '%s · Pearla',
+    default: 'Pearla · Real West African Recipes',
   },
   description:
-    'Authentic West African recipes — Jollof Rice, Egusi Soup, Suya, Pounded Yam and more. Step-by-step guides with full ingredients.',
+    'Real West African recipes. Jollof Rice, Egusi Soup, Suya, Pounded Yam and more, written out step by step with every ingredient.',
   openGraph: {
     siteName: 'Pearla',
     type: 'website',
-    title: 'Pearla — Authentic African Recipes',
+    title: 'Pearla · Real West African Recipes',
     description:
-      'Authentic West African recipes — Jollof Rice, Egusi Soup, Suya, Pounded Yam and more. Step-by-step guides with full ingredients.',
+      'Real West African recipes. Jollof Rice, Egusi Soup, Suya, Pounded Yam and more, written out step by step with every ingredient.',
     images: [
       'https://images.unsplash.com/photo-1665332195309-9d75071138f0?auto=format&fit=crop&w=1200&q=80',
     ],

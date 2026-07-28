@@ -26,8 +26,9 @@ export default function HomePage() {
               of West Africa
             </h1>
             <p className="hero-desc">
-              Authentic recipes passed down through generations. From the smoky streets of
-              Lagos to the vibrant markets of Accra — every dish tells a story.
+              Real recipes passed down from parents to children, written out fully so you can
+              cook them yourself. From the street food of Lagos to the busy markets of Accra,
+              every dish here has a story behind it.
             </p>
             <div className="hero-actions">
               <Link href="/recipes" className="btn btn-primary">
@@ -101,7 +102,7 @@ export default function HomePage() {
           <div className="section-header">
             <h2 className="section-title">Start With These</h2>
             <p className="section-subtitle">
-              The three dishes our readers cook the most — each one a West African classic
+              The three dishes people cook the most here. Every one of them is a West African classic.
             </p>
           </div>
           <div className="recipes-grid">
@@ -120,12 +121,12 @@ export default function HomePage() {
       {/* ABOUT TEASER */}
       <section className="about-teaser">
         <div className="container">
-          <h2 className="about-teaser-title">Where Every Recipe Holds a Memory</h2>
+          <h2 className="about-teaser-title">Every Recipe Here Holds a Memory</h2>
           <p className="about-teaser-desc">
-            Pearla was born from a deep love of African food and the belief that our traditional
-            recipes deserve to be shared with the world — with full detail, authenticity, and care.
+            We started Pearla because we love African food and we believe our recipes deserve to
+            be shared properly, with all the details and nothing left out.
           </p>
-          <Link href="/about" className="btn btn-white">Discover Our Story</Link>
+          <Link href="/about" className="btn btn-white">Read Our Story</Link>
         </div>
       </section>
     </>

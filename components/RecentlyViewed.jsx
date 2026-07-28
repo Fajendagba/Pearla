@@ -26,7 +26,7 @@ export default function RecentlyViewed() {
     <section className="recently-viewed" aria-label="Recently viewed recipes">
       <div className="container">
         <div className="recently-viewed-header">
-          <h2 className="recently-viewed-title">Welcome back — pick up where you left off</h2>
+          <h2 className="recently-viewed-title">Welcome back. Carry on from where you stopped</h2>
         </div>
         <div className="recently-viewed-row">
           {recent.map((r) => (

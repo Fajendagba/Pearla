@@ -63,7 +63,7 @@ export default function SearchOverlay({ onClose }) {
           <div className="search-suggestions">
             {recentSearches.length > 0 && (
               <>
-                <p className="search-heading">Your recent searches</p>
+                <p className="search-heading">What you looked for before</p>
                 <div className="search-chips">
                   {recentSearches.map((s) => (
                     <button key={s} type="button" className="search-chip" onClick={() => setQuery(s)}>
@@ -73,7 +73,7 @@ export default function SearchOverlay({ onClose }) {
                 </div>
               </>
             )}
-            <p className="search-heading">Most loved right now</p>
+            <p className="search-heading">What people cook the most</p>
             <ul className="search-results">
               {popular.map((r) => (
                 <li key={r.slug}>
@@ -112,9 +112,9 @@ export default function SearchOverlay({ onClose }) {
           </ul>
         ) : (
           <div className="search-empty">
-            <p><strong>No matches for “{query}”</strong></p>
-            <p>Try “rice”, “soup”, “grill” or “snack”, or browse every recipe we have.</p>
-            <Link href="/recipes" className="btn btn-outline" onClick={onClose}>Browse all recipes</Link>
+            <p><strong>We found nothing for “{query}”</strong></p>
+            <p>Try “rice”, “soup”, “grill” or “snack”. Or just look through everything we have.</p>
+            <Link href="/recipes" className="btn btn-outline" onClick={onClose}>See all recipes</Link>
           </div>
         )}
       </div>

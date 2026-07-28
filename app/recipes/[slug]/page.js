@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
     title: recipe.title,
     description: recipe.shortDesc,
     openGraph: {
-      title: `${recipe.title} — Pearla`,
+      title: `${recipe.title} · Pearla`,
       description: recipe.shortDesc,
       images: [recipe.image],
     },
@@ -85,7 +85,7 @@ export default async function RecipePage({ params }) {
         </div>
       </section>
 
-      {/* RECIPE BODY — ingredients checklist, serving scaler, cook-mode steps */}
+      {/* RECIPE BODY: ingredients checklist, serving scaler, cook-mode steps */}
       <section className="recipe-body">
         <div className="container">
           <RecipeInteractive recipe={recipe} />

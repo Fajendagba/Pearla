@@ -17,8 +17,8 @@ export default function Footer() {
           <div>
             <div className="footer-logo">Pearla.</div>
             <p className="footer-desc">
-              Your guide to authentic West African cooking — from everyday meals to
-              celebration feasts, made with love.
+              We help you cook real West African food, from your everyday meals to the big
+              dishes you make for parties.
             </p>
           </div>
           <div>
@@ -41,7 +41,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2026 Pearla. Made with ❤️ for African food lovers everywhere.</p>
+          <p>© 2026 Pearla. Made with ❤️ for people who love African food.</p>
         </div>
       </div>
     </footer>

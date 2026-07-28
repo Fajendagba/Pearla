@@ -57,16 +57,32 @@ export default function RecipeInteractive({ recipe }) {
   const progressPct = Math.round((doneUnits / totalUnits) * 100);
 
   let progressMessage;
-  if (doneUnits === 0) progressMessage = 'Tick ingredients as you gather them, then tick each step as you cook. We will keep your place.';
-  else if (doneUnits === totalUnits) progressMessage = 'All done. Time to plate up and enjoy!';
-  else if (doneCount === totalSteps) progressMessage = 'All steps done. Just a few ingredients left unticked.';
-  else if (doneCount === 0 && checkedCount < totalIngredients) progressMessage = `Great start. ${checkedCount} of ${totalIngredients} ingredients gathered.`;
-  else if (doneCount === 0) progressMessage = 'Everything gathered. Time to fire up the stove!';
-  else if (totalSteps - doneCount === 1) progressMessage = 'One step left. The kitchen smells great already.';
-  else progressMessage = `Nice pace. ${totalSteps - doneCount} steps to go.`;
+  if (doneUnits === 0) progressMessage = 'Tick off each thing you have, then tick off each cooking step as you finish it. We save your place for you.';
+  else if (doneUnits === totalUnits) progressMessage = 'You are done. Serve it up and enjoy!';
+  else if (doneCount === totalSteps) progressMessage = 'You finished cooking. A few things are still not ticked off up there.';
+  else if (doneCount === 0 && checkedCount < totalIngredients) progressMessage = `Good start. You have ${checkedCount} out of ${totalIngredients} things so far.`;
+  else if (doneCount === 0) progressMessage = 'You have everything. Now start cooking below.';
+  else if (totalSteps - doneCount === 1) progressMessage = 'Just one step left. Your kitchen must smell good by now.';
+  else progressMessage = `Going well. ${totalSteps - doneCount} steps left.`;
 
   return (
-    <div className="recipe-body-inner">
+    <>
+      <div className="cook-progress" role="status">
+        <div className="cook-progress-top">
+          <strong>
+            {doneUnits === 0
+              ? 'Ready to cook?'
+              : `${checkedCount} of ${totalIngredients} things · ${doneCount} of ${totalSteps} steps`}
+          </strong>
+          <span>{progressPct}%</span>
+        </div>
+        <div className="cook-progress-track">
+          <div className="cook-progress-fill" style={{ width: `${progressPct}%` }} />
+        </div>
+        <p className="cook-progress-msg">{progressMessage}</p>
+      </div>
+
+      <div className="recipe-body-inner">
       {/* INGREDIENTS */}
       <aside className="ingredients-card">
         <h3 className="ingredients-card-title">Ingredients</h3>
@@ -91,14 +107,14 @@ export default function RecipeInteractive({ recipe }) {
         </div>
         {servings !== recipe.servings && (
           <p className="serving-note">
-            Amounts adjusted from the original {recipe.servings} servings.{' '}
+            We changed the amounts for you. The recipe was written for {recipe.servings}.{' '}
             <button type="button" className="link-btn" onClick={() => setServings(recipe.servings)}>
-              Reset
+              Put it back
             </button>
           </p>
         )}
 
-        <p className="ingredients-hint">Tap an ingredient to tick it off as you gather it.</p>
+        <p className="ingredients-hint">Tap each one as you get it ready.</p>
 
         {recipe.ingredients.map((group) => (
           <div key={group.group} className="ingredients-group">
@@ -128,7 +144,7 @@ export default function RecipeInteractive({ recipe }) {
 
         {checkedCount > 0 && (
           <button type="button" className="link-btn clear-checklist" onClick={() => setCheckedIngredients({})}>
-            Clear checklist ({checkedCount})
+            Untick everything ({checkedCount})
           </button>
         )}
       </aside>
@@ -137,45 +153,30 @@ export default function RecipeInteractive({ recipe }) {
       <div className="instructions-section">
         <h3>How to Make {recipe.title}</h3>
 
-        <div className="cook-progress" role="status">
-          <div className="cook-progress-top">
-            <strong>
-              {doneUnits === 0
-                ? 'Ready to cook?'
-                : `${checkedCount}/${totalIngredients} ingredients · ${doneCount}/${totalSteps} steps`}
-            </strong>
-            <span>{progressPct}%</span>
-          </div>
-          <div className="cook-progress-track">
-            <div className="cook-progress-fill" style={{ width: `${progressPct}%` }} />
-          </div>
-          <p className="cook-progress-msg">{progressMessage}</p>
-        </div>
-
         {recipe.steps.map((step, i) => {
           const done = !!doneSteps[i];
           return (
             <div key={i} className={`step${done ? ' step-done' : ''}`}>
-              <button
-                type="button"
-                className="step-number"
-                onClick={() => toggleStep(i)}
-                aria-pressed={done}
-                aria-label={done ? `Mark step ${i + 1} as not done` : `Mark step ${i + 1} as done`}
-                title={done ? 'Tap to undo' : 'Tap when done'}
-              >
-                {done ? '✓' : i + 1}
-              </button>
+              <div className="step-number" aria-hidden="true">{done ? '✓' : i + 1}</div>
               <div className="step-content">
                 <h4>{step.title}</h4>
                 <p>{step.body}</p>
+                <button
+                  type="button"
+                  className={`step-done-btn${done ? ' is-done' : ''}`}
+                  onClick={() => toggleStep(i)}
+                  aria-pressed={done}
+                >
+                  <span className="step-done-box" aria-hidden="true">{done ? '✓' : ''}</span>
+                  {done ? `Step ${i + 1} done. Tap to undo` : `I finished step ${i + 1}`}
+                </button>
               </div>
             </div>
           );
         })}
 
         <div className="tips-section">
-          <h4>Chef&apos;s Tips</h4>
+          <h4>Things That Help</h4>
           <ul className="tips-list">
             {recipe.tips.map((tip, i) => (
               <li key={i}>{tip}</li>
@@ -183,6 +184,7 @@ export default function RecipeInteractive({ recipe }) {
           </ul>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

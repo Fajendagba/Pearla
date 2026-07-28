@@ -1,4 +1,4 @@
-# Pearla — Next.js
+# Pearla (Next.js)
 
 West African recipe site converted from static HTML to Next.js 15 App Router. All pages are statically pre-rendered at build time.
 
@@ -6,10 +6,10 @@ West African recipe site converted from static HTML to Next.js 15 App Router. Al
 
 ## Tech Stack
 
-- **Next.js 15** — App Router, `generateStaticParams` for recipe pages
-- **React 19** — server components by default, client components only where state is needed
-- **CSS** — global stylesheet with custom properties, no Tailwind or CSS-in-JS
-- **next/font** — Playfair Display + Lato loaded without render blocking
+- **Next.js 15**: App Router, `generateStaticParams` for recipe pages
+- **React 19**: server components by default, client components only where state is needed
+- **CSS**: global stylesheet with custom properties, no Tailwind or CSS-in-JS
+- **next/font**: Playfair Display + Lato loaded without render blocking
 
 ---
 
@@ -46,10 +46,10 @@ npm run start    # serve production build
 
 | Route | Page |
 |-------|------|
-| `/` | Home — hero, featured recipes, filter tabs |
+| `/` | Home: hero, featured recipes, filter tabs |
 | `/recipes` | All recipes with category filter |
 | `/about` | Story, regions, values |
-| `/recipes/[slug]` | Recipe detail — ingredients, steps, tips |
+| `/recipes/[slug]` | Recipe detail: ingredients, steps, tips |
 
 Recipe slugs: `jollof-rice`, `egusi-soup`, `suya`, `pounded-yam`, `akara`, `dodo`
 
