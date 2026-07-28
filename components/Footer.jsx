@@ -1,5 +1,14 @@
 import Link from 'next/link';
 
+const CATEGORY_LINKS = [
+  { key: 'rice', label: 'Rice Dishes' },
+  { key: 'soups', label: 'Soups & Stews' },
+  { key: 'grill', label: 'Grills & BBQ' },
+  { key: 'snacks', label: 'Snacks' },
+  { key: 'sides', label: 'Sides' },
+  { key: 'swallows', label: 'Swallows' },
+];
+
 export default function Footer() {
   return (
     <footer>
@@ -23,10 +32,11 @@ export default function Footer() {
           <div>
             <h4 className="footer-heading">Categories</h4>
             <ul className="footer-links">
-              <li><Link href="/recipes">Rice Dishes</Link></li>
-              <li><Link href="/recipes">Soups &amp; Stews</Link></li>
-              <li><Link href="/recipes">Grills &amp; BBQ</Link></li>
-              <li><Link href="/recipes">Snacks &amp; Sides</Link></li>
+              {CATEGORY_LINKS.map((c) => (
+                <li key={c.key}>
+                  <Link href={`/recipes?category=${c.key}`}>{c.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

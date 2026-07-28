@@ -12,29 +12,58 @@ const FILTERS = [
   { key: 'swallows', label: 'Swallows' },
 ];
 
-export default function FilterTabs({ recipes }) {
-  const [active, setActive] = useState('all');
+export default function FilterTabs({ recipes, initialCategory, syncUrl = false }) {
+  const validInitial = FILTERS.some((f) => f.key === initialCategory) ? initialCategory : 'all';
+  const [active, setActive] = useState(validInitial);
+
+  const countFor = (key) =>
+    key === 'all' ? recipes.length : recipes.filter((r) => r.category === key).length;
+
+  const select = (key) => {
+    setActive(key);
+    if (syncUrl && typeof window !== 'undefined') {
+      const url = key === 'all' ? '/recipes' : `/recipes?category=${key}`;
+      window.history.replaceState(null, '', url);
+    }
+  };
 
   const visible = active === 'all' ? recipes : recipes.filter((r) => r.category === active);
+  const activeLabel = FILTERS.find((f) => f.key === active)?.label ?? 'All';
 
   return (
     <>
-      <div className="filter-tabs">
-        {FILTERS.map((f) => (
-          <button
-            key={f.key}
-            className={`filter-btn${active === f.key ? ' active' : ''}`}
-            onClick={() => setActive(f.key)}
-          >
-            {f.label}
+      <div className="filter-tabs" role="group" aria-label="Filter recipes by category">
+        {FILTERS.map((f) => {
+          const count = countFor(f.key);
+          return (
+            <button
+              key={f.key}
+              className={`filter-btn${active === f.key ? ' active' : ''}`}
+              onClick={() => select(f.key)}
+              aria-pressed={active === f.key}
+            >
+              {f.label} <span className="filter-count">{count}</span>
+            </button>
+          );
+        })}
+      </div>
+      {visible.length > 0 ? (
+        <div className="recipes-grid">
+          {visible.map((recipe) => (
+            <RecipeCard key={recipe.slug} recipe={recipe} />
+          ))}
+        </div>
+      ) : (
+        <div className="empty-state">
+          <p className="empty-state-title">No {activeLabel} recipes yet</p>
+          <p className="empty-state-desc">
+            We are still cooking this category. Check back soon, or browse everything we have.
+          </p>
+          <button className="btn btn-outline" onClick={() => select('all')}>
+            Show all recipes
           </button>
-        ))}
-      </div>
-      <div className="recipes-grid">
-        {visible.map((recipe) => (
-          <RecipeCard key={recipe.slug} recipe={recipe} />
-        ))}
-      </div>
+        </div>
+      )}
     </>
   );
 }

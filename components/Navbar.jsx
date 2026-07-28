@@ -2,9 +2,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import SearchOverlay from './SearchOverlay';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
 
   const close = () => setIsOpen(false);
@@ -27,16 +29,31 @@ export default function Navbar() {
           <li><Link href="/about" className={linkClass('/about')} onClick={close}>About</Link></li>
         </ul>
 
-        <button
-          className="hamburger"
-          onClick={() => setIsOpen((o) => !o)}
-          aria-label="Toggle menu"
-        >
-          <span style={isOpen ? { transform: 'rotate(45deg) translate(5px, 5px)' } : {}} />
-          <span style={isOpen ? { opacity: 0 } : {}} />
-          <span style={isOpen ? { transform: 'rotate(-45deg) translate(5px, -5px)' } : {}} />
-        </button>
+        <div className="navbar-actions">
+          <button
+            type="button"
+            className="search-trigger"
+            onClick={() => setSearchOpen(true)}
+            aria-label="Search recipes"
+          >
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <span className="search-trigger-label">Search</span>
+          </button>
+
+          <button
+            className="hamburger"
+            onClick={() => setIsOpen((o) => !o)}
+            aria-label="Toggle menu"
+            aria-expanded={isOpen}
+          >
+            <span style={isOpen ? { transform: 'rotate(45deg) translate(5px, 5px)' } : {}} />
+            <span style={isOpen ? { opacity: 0 } : {}} />
+            <span style={isOpen ? { transform: 'rotate(-45deg) translate(5px, -5px)' } : {}} />
+          </button>
+        </div>
       </div>
+
+      {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
     </nav>
   );
 }

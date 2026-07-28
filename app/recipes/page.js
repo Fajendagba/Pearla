@@ -1,9 +1,15 @@
 import FilterTabs from '@/components/FilterTabs';
 import { recipes } from '@/data/recipes';
 
-export const metadata = { title: 'All Recipes' };
+export const metadata = {
+  title: 'All Recipes',
+  description:
+    'Browse every authentic West African recipe on Pearla — rice dishes, soups and stews, grills, snacks, sides and swallows.',
+};
 
-export default function RecipesPage() {
+export default async function RecipesPage({ searchParams }) {
+  const { category } = await searchParams;
+
   return (
     <>
       <header className="page-header">
@@ -18,7 +24,7 @@ export default function RecipesPage() {
 
       <section className="recipes-page-body">
         <div className="container">
-          <FilterTabs recipes={recipes} />
+          <FilterTabs recipes={recipes} initialCategory={category} syncUrl />
         </div>
       </section>
     </>

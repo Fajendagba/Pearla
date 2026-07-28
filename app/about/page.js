@@ -1,6 +1,13 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import Flag from '@/components/Flag';
+import { getRecipeBySlug } from '@/data/recipes';
 
-export const metadata = { title: 'About Pearla' };
+export const metadata = {
+  title: 'About Pearla',
+  description:
+    'The story behind Pearla — why we document authentic West African recipes with full detail, and the regions whose kitchens inspire us.',
+};
 
 export default function AboutPage() {
   return (
@@ -23,10 +30,25 @@ export default function AboutPage() {
             <Link href="/recipes" className="btn btn-primary">Browse Recipes</Link>
           </div>
           <div className="about-visual" style={{ display: 'flex', justifyContent: 'center' }}>
-            <div className="about-emoji-grid">
-              {['🍚', '🥘', '🍢', '🌶️', '🌍', '🥣', '🍌', '🫘', '🧅'].map((e) => (
-                <div key={e} className="emoji-card">{e}</div>
-              ))}
+            <div className="about-collage">
+              {[
+                { slug: 'jollof-rice', className: 'about-collage-item tall' },
+                { slug: 'suya', className: 'about-collage-item' },
+                { slug: 'egusi-soup', className: 'about-collage-item' },
+              ].map(({ slug, className }) => {
+                const r = getRecipeBySlug(slug);
+                if (!r) return null;
+                return (
+                  <Link key={slug} href={`/recipes/${slug}`} className={className} title={r.title}>
+                    <Image
+                      src={r.image}
+                      alt={r.imageAlt ?? r.title}
+                      fill
+                      sizes="(max-width: 900px) 45vw, 220px"
+                    />
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -64,16 +86,66 @@ export default function AboutPage() {
 
           <ul className="region-list">
             {[
-              { flag: '🇳🇬', name: 'Nigerian Classics', dishes: 'Jollof Rice, Egusi Soup, Pounded Yam, Akara, Banga Soup, Ofada Rice' },
-              { flag: '🇬🇭', name: 'Ghanaian Favourites', dishes: 'Groundnut Soup, Waakye, Kelewele, Kontomire Stew, Banku' },
-              { flag: '🇸🇳', name: 'Senegalese & Francophone', dishes: 'Thieboudienne, Yassa Poulet, Mafé, Thiakry' },
-              { flag: '🌍', name: 'Pan-West African', dishes: 'Suya, Jollof variants, Fufu, Fried Plantain (Dodo)' },
+              {
+                flag: 'ng',
+                name: 'Nigerian Classics',
+                dishes: [
+                  { label: 'Jollof Rice', slug: 'jollof-rice' },
+                  { label: 'Egusi Soup', slug: 'egusi-soup' },
+                  { label: 'Pounded Yam', slug: 'pounded-yam' },
+                  { label: 'Akara', slug: 'akara' },
+                  { label: 'Banga Soup' },
+                  { label: 'Ofada Rice' },
+                ],
+              },
+              {
+                flag: 'gh',
+                name: 'Ghanaian Favourites',
+                dishes: [
+                  { label: 'Groundnut Soup' },
+                  { label: 'Waakye' },
+                  { label: 'Kelewele' },
+                  { label: 'Kontomire Stew' },
+                  { label: 'Banku' },
+                ],
+              },
+              {
+                flag: 'sn',
+                name: 'Senegalese & Francophone',
+                dishes: [
+                  { label: 'Thieboudienne' },
+                  { label: 'Yassa Poulet' },
+                  { label: 'Mafé' },
+                  { label: 'Thiakry' },
+                ],
+              },
+              {
+                flag: 'world',
+                name: 'Pan-West African',
+                dishes: [
+                  { label: 'Suya', slug: 'suya' },
+                  { label: 'Jollof variants', slug: 'jollof-rice' },
+                  { label: 'Fufu' },
+                  { label: 'Fried Plantain (Dodo)', slug: 'dodo' },
+                ],
+              },
             ].map((r) => (
               <li key={r.name} className="region-item">
-                <span className="region-icon">{r.flag}</span>
+                <span className="region-icon"><Flag code={r.flag} /></span>
                 <div>
                   <div className="region-name">{r.name}</div>
-                  <div className="region-dishes">{r.dishes}</div>
+                  <div className="region-dishes">
+                    {r.dishes.map((d, i) => (
+                      <span key={d.label}>
+                        {d.slug ? (
+                          <Link href={`/recipes/${d.slug}`} className="region-dish-link">{d.label}</Link>
+                        ) : (
+                          d.label
+                        )}
+                        {i < r.dishes.length - 1 ? ', ' : ''}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </li>
             ))}

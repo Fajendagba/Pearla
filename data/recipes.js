@@ -8,6 +8,9 @@ export const recipes = [
     categoryLabel: 'Rice Dishes',
     emoji: '🍚',
     gradient: 'linear-gradient(135deg, #FF6B35, #F7931E)',
+    image: 'https://images.unsplash.com/photo-1664992960082-0ea299a9c53e?auto=format&fit=crop&w=1000&q=80',
+    imageAlt: 'A dish of smoky party jollof rice served with grilled meat skewers',
+    featured: true,
     prepTime: '20 min',
     cookTime: '40 min',
     totalTime: '60 min',
@@ -73,6 +76,9 @@ export const recipes = [
     categoryLabel: 'Soups & Stews',
     emoji: '🥘',
     gradient: 'linear-gradient(135deg, #8B6914, #C49A3C)',
+    image: 'https://images.unsplash.com/photo-1763048443535-1243379234e2?auto=format&fit=crop&w=1000&q=80',
+    imageAlt: 'Hands holding a rich bowl of egusi soup with assorted meats',
+    featured: true,
     prepTime: '20 min',
     cookTime: '70 min',
     totalTime: '90 min',
@@ -136,6 +142,9 @@ export const recipes = [
     categoryLabel: 'Grills & BBQ',
     emoji: '🍢',
     gradient: 'linear-gradient(135deg, #8B1A1A, #D4381A)',
+    image: 'https://images.unsplash.com/photo-1765584830134-12d879ad13bd?auto=format&fit=crop&w=1000&q=80',
+    imageAlt: 'Smoky spiced suya meat with fresh peppers at a street food grill',
+    featured: true,
     prepTime: '30 min',
     cookTime: '15 min',
     totalTime: '45 min',
@@ -200,6 +209,8 @@ export const recipes = [
     categoryLabel: 'Swallows',
     emoji: '🥣',
     gradient: 'linear-gradient(135deg, #C8A96E, #E8CFA0)',
+    image: 'https://images.unsplash.com/photo-1736239093652-301080f3e2c2?auto=format&fit=crop&w=1000&q=80',
+    imageAlt: 'Smooth white pounded yam served on a banana leaf',
     prepTime: '10 min',
     cookTime: '30 min',
     totalTime: '40 min',
@@ -259,6 +270,8 @@ export const recipes = [
     categoryLabel: 'Snacks',
     emoji: '🫘',
     gradient: 'linear-gradient(135deg, #D4891A, #F5B942)',
+    image: 'https://images.unsplash.com/photo-1647162264554-5f60af27f052?auto=format&fit=crop&w=1000&q=80',
+    imageAlt: 'Golden crispy akara bean cakes piled on a white plate',
     prepTime: '15 min',
     cookTime: '20 min',
     totalTime: '35 min',
@@ -317,6 +330,8 @@ export const recipes = [
     categoryLabel: 'Sides',
     emoji: '🍌',
     gradient: 'linear-gradient(135deg, #F5A800, #FFCC44)',
+    image: 'https://images.unsplash.com/photo-1563336522-c3bd728d3b45?auto=format&fit=crop&w=1000&q=80',
+    imageAlt: 'Golden caramelised slices of fried plantain with a fork',
     prepTime: '5 min',
     cookTime: '10 min',
     totalTime: '15 min',
@@ -367,3 +382,12 @@ export function getRecipeBySlug(slug) {
 export function getRelatedRecipes(slugs) {
   return recipes.filter((r) => slugs.includes(r.slug));
 }
+
+export function getFeaturedRecipes() {
+  return recipes.filter((r) => r.featured);
+}
+
+export const categoryCount = recipes.reduce((acc, r) => {
+  acc[r.category] = (acc[r.category] ?? 0) + 1;
+  return acc;
+}, {});

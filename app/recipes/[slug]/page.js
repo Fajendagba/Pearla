@@ -1,7 +1,10 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { recipes, getRecipeBySlug, getRelatedRecipes } from '@/data/recipes';
 import RecipeCard from '@/components/RecipeCard';
+import RecipeInteractive from '@/components/RecipeInteractive';
+import ShareBar from '@/components/ShareBar';
 
 export function generateStaticParams() {
   return recipes.map((r) => ({ slug: r.slug }));
@@ -11,7 +14,15 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const recipe = getRecipeBySlug(slug);
   if (!recipe) return { title: 'Recipe Not Found' };
-  return { title: recipe.title };
+  return {
+    title: recipe.title,
+    description: recipe.shortDesc,
+    openGraph: {
+      title: `${recipe.title} — Pearla`,
+      description: recipe.shortDesc,
+      images: [recipe.image],
+    },
+  };
 }
 
 export default async function RecipePage({ params }) {
@@ -28,7 +39,7 @@ export default async function RecipePage({ params }) {
         <div className="container">
           <div className="recipe-hero-inner">
             <div>
-              <nav className="recipe-breadcrumb">
+              <nav className="recipe-breadcrumb" aria-label="Breadcrumb">
                 <Link href="/">Home</Link> ›{' '}
                 <Link href="/recipes">Recipes</Link> ›{' '}
                 {recipe.title}
@@ -37,82 +48,47 @@ export default async function RecipePage({ params }) {
               <p className="recipe-detail-desc">{recipe.fullDesc}</p>
               <div className="recipe-detail-meta">
                 <div className="meta-badge">
-                  <span className="meta-badge-icon">⏱</span>
+                  <span className="meta-badge-icon" aria-hidden="true">⏱</span>
                   <span className="meta-badge-value">{recipe.prepTime}</span>
                   <span className="meta-badge-label">Prep Time</span>
                 </div>
                 <div className="meta-badge">
-                  <span className="meta-badge-icon">🔥</span>
+                  <span className="meta-badge-icon" aria-hidden="true">🔥</span>
                   <span className="meta-badge-value">{recipe.cookTime}</span>
                   <span className="meta-badge-label">Cook Time</span>
                 </div>
                 <div className="meta-badge">
-                  <span className="meta-badge-icon">👤</span>
-                  <span className="meta-badge-value">{recipe.servings}</span>
-                  <span className="meta-badge-label">Servings</span>
+                  <span className="meta-badge-icon" aria-hidden="true">🍽️</span>
+                  <span className="meta-badge-value">{recipe.totalTime}</span>
+                  <span className="meta-badge-label">Ready In</span>
                 </div>
                 <div className="meta-badge">
-                  <span className="meta-badge-icon">📊</span>
+                  <span className="meta-badge-icon" aria-hidden="true">📊</span>
                   <span className="meta-badge-value">{recipe.difficulty}</span>
                   <span className="meta-badge-label">Difficulty</span>
                 </div>
               </div>
+              <ShareBar title={recipe.title} />
             </div>
             <div>
-              <div className="recipe-plate-large">{recipe.emoji}</div>
+              <div className="recipe-hero-photo">
+                <Image
+                  src={recipe.image}
+                  alt={recipe.imageAlt ?? recipe.title}
+                  fill
+                  sizes="(max-width: 900px) 100vw, 42vw"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* RECIPE BODY */}
+      {/* RECIPE BODY — ingredients checklist, serving scaler, cook-mode steps */}
       <section className="recipe-body">
         <div className="container">
-          <div className="recipe-body-inner">
-
-            {/* INGREDIENTS SIDEBAR */}
-            <aside className="ingredients-card">
-              <h3 className="ingredients-card-title">Ingredients</h3>
-              <p className="ingredients-servings">Serves {recipe.servings} people</p>
-              {recipe.ingredients.map((group) => (
-                <div key={group.group} className="ingredients-group">
-                  <div className="ingredients-group-title">{group.group}</div>
-                  <ul className="ingredients-list">
-                    {group.items.map((item) => (
-                      <li key={item.name}>
-                        <span>{item.name}</span>
-                        <span className="ingredient-amount">{item.amount}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </aside>
-
-            {/* INSTRUCTIONS */}
-            <div className="instructions-section">
-              <h3>How to Make {recipe.title}</h3>
-              {recipe.steps.map((step, i) => (
-                <div key={i} className="step">
-                  <div className="step-number">{i + 1}</div>
-                  <div className="step-content">
-                    <h4>{step.title}</h4>
-                    <p>{step.body}</p>
-                  </div>
-                </div>
-              ))}
-
-              <div className="tips-section">
-                <h4>Chef&apos;s Tips</h4>
-                <ul className="tips-list">
-                  {recipe.tips.map((tip, i) => (
-                    <li key={i}>{tip}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-          </div>
+          <RecipeInteractive recipe={recipe} />
         </div>
       </section>
 
